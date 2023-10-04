@@ -11,7 +11,6 @@ app.use((req, res, next) => {
 
 app.post("/convertFromLongToShort", async (req, res, next) => {
   const long_url = req.body.long_url;
-  console.log(long_url);
   try {
     let response = await fetch("https://api-ssl.bitly.com/v4/shorten", {
       method: "POST",
@@ -27,7 +26,7 @@ app.post("/convertFromLongToShort", async (req, res, next) => {
     response = await response.json();
     return res.status(200).json({ status: "success", shortUrl: response.id });
   } catch (err) {
-    console.error(err);
+    return res.status(404).json({ status: "failed", err });
   }
 });
 
@@ -51,8 +50,7 @@ app.post("/convertFromShortToLong", async (req, res, next) => {
       .status(200)
       .json({ status: "success", ActualLink: response.long_url });
   } catch (err) {
-    console.error(err);
-    res.status(404).json({ status: "failed", err });
+    return res.status(404).json({ status: "failed", err });
   }
 });
 
