@@ -48,7 +48,7 @@ app.post("/convertFromShortToLong", async (req, res, next) => {
     response = await response.json();
     return res
       .status(200)
-      .json({ status: "success", ActualLink: response.long_url });
+      .json({ status: "success", long_url: response.long_url });
   } catch (err) {
     return res.status(404).json({ status: "failed", err });
   }
